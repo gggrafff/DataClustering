@@ -1,18 +1,16 @@
-use crate::metric::Metric;
+use crate::record::Record;
 
 pub trait Algorithm {
-    fn eval<R>(&mut self, metric: &impl Metric<R>, data: &[R]) -> Vec<usize>;
+    fn eval<R: Record>(&mut self, data: &[R]) -> Vec<usize>;
 }
 
 pub struct SomeAlgo {}
 
 impl Algorithm for SomeAlgo {
-    fn eval<R>(&mut self, metric: &impl Metric<R>, data: &[R]) -> Vec<usize> {
+    fn eval<R: Record>(&mut self, data: &[R]) -> Vec<usize> {
         data.iter()
             .zip(data.iter().rev())
-            .map(|(r1, r2)| metric.dist(r1, r2) as usize)
+            .map(|(r1, r2)| r1.distance(r2) as usize)
             .collect::<Vec<usize>>()
     }
 }
-
-

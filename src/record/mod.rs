@@ -1,18 +1,45 @@
-#[derive(Clone)]
-pub struct Record {
-    vals: Vec<f64>,
+pub mod row;
+
+pub trait Record {
+    fn distance(&self, other: &Self) -> f64;
 }
 
-impl Record {
-    pub fn new(vals: Vec<f64>) -> Self {
-        Self { vals }
-    }
+pub trait Difference {
+    fn diff(&self, other: &Self) -> f64;
+}
 
-    pub fn vals(&self) -> &[f64] {
-        &self.vals
+impl Difference for i8 {
+    fn diff(&self, to: &Self) -> f64 {
+        (self - to) as f64
     }
+}
 
-    pub fn vals_mut(&mut self) -> &mut [f64] {
-        &mut self.vals
+impl Difference for i16 {
+    fn diff(&self, to: &Self) -> f64 {
+        (self - to) as f64
+    }
+}
+
+impl Difference for i32 {
+    fn diff(&self, to: &Self) -> f64 {
+        (self - to) as f64
+    }
+}
+
+impl Difference for i64 {
+    fn diff(&self, to: &Self) -> f64 {
+        (self - to) as f64
+    }
+}
+
+impl Difference for f32 {
+    fn diff(&self, to: &Self) -> f64 {
+        (self - to) as f64
+    }
+}
+
+impl Difference for f64 {
+    fn diff(&self, to: &Self) -> f64 {
+        self - to
     }
 }
