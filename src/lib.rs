@@ -6,13 +6,12 @@ pub mod utils;
 #[cfg(test)]
 mod tests {
     use crate::algo::{Algorithm, SomeAlgo};
-    use crate::metric::row::{EucludeRowMetric, ManhattanRowMetric};
+    use crate::metric::row;
     use crate::record::RowRecord;
 
     #[test]
     fn test_works() {
         let cells = vec![1f64, 2f64, 3f64, 4f64, 5f64, 6f64];
-        let euclid_metric = EucludeRowMetric::default();
         let mut records = vec![RowRecord::new(cells); 6];
 
         for (i, r) in records.iter_mut().enumerate() {
@@ -20,11 +19,11 @@ mod tests {
         }
 
         let mut algo = SomeAlgo {};
-        let result = algo.eval(&records, euclid_metric);
+
+        let result = algo.eval(&records, row::euclide_row_metric);
         println!("Euclide result: {:?}", result);
 
-        let man_metric = ManhattanRowMetric::default();
-        let result = algo.eval(&records, man_metric);
+        let result = algo.eval(&records, row::manhattan_row_metric);
         println!("Manhatten result: {:?}", result);
     }
 }
