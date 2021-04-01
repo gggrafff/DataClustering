@@ -1,45 +1,30 @@
-pub mod row;
-
-pub trait Record {
-    fn distance(&self, other: &Self) -> f64;
+#[derive(Clone, Debug)]
+pub struct RowRecord<Cell> {
+    cells: Vec<Cell>,
 }
 
-pub trait Difference {
-    fn diff(&self, other: &Self) -> f64;
-}
-
-impl Difference for i8 {
-    fn diff(&self, to: &Self) -> f64 {
-        (self - to) as f64
+impl<Cell> RowRecord<Cell> {
+    pub fn new(cells: Vec<Cell>) -> Self {
+        Self { cells }
     }
-}
 
-impl Difference for i16 {
-    fn diff(&self, to: &Self) -> f64 {
-        (self - to) as f64
+    pub fn iter(&self) -> impl Iterator<Item = &Cell> {
+        self.cells.iter()
     }
-}
 
-impl Difference for i32 {
-    fn diff(&self, to: &Self) -> f64 {
-        (self - to) as f64
+    pub fn iter_mut(&mut self) -> impl Iterator<Item = &mut Cell> {
+        self.cells.iter_mut()
     }
-}
 
-impl Difference for i64 {
-    fn diff(&self, to: &Self) -> f64 {
-        (self - to) as f64
+    pub fn cell(&self, index: usize) -> &Cell {
+        &self.cells[index]
     }
-}
 
-impl Difference for f32 {
-    fn diff(&self, to: &Self) -> f64 {
-        (self - to) as f64
+    pub fn cell_mut(&mut self, index: usize) -> &mut Cell {
+        &mut self.cells[index]
     }
-}
 
-impl Difference for f64 {
-    fn diff(&self, to: &Self) -> f64 {
-        self - to
+    pub fn into_cells(self) -> Vec<Cell> {
+        self.cells
     }
 }
